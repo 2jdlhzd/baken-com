@@ -52,6 +52,18 @@ class Controller {
       return res.status(400).json({ error });
     }
   };
+  obtenerUno = async(req: any, res: any, variable: any) => {
+    const usuario_id = req.params[variable];
+    try {
+      const response = await this.modelo.findAll({
+        where: {[variable]: usuario_id}
+      });
+      return res.status(200).json({ success: 'true', response });
+    } catch (error) {
+      return res.status(400).json({ error });
+    }
+  };
+  
   private servicio = async () => {};
 }
 export default Controller;

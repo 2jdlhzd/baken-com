@@ -29,7 +29,7 @@ const Usuarios = sequelize.define('usuarios', {
     allowNull: false
   }
 });
-
+  
 useBcrypt(Usuarios, {
   field: 'password',
   rounds: 12,

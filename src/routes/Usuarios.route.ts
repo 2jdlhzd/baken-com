@@ -7,6 +7,7 @@ const controller = new Controller(Usuarios);
 
 const checkAuth = async (req, res) => {
   const { correo, password } = req.body;
+  
   if (!correo || !password) {
     return res
       .status(400)
@@ -19,9 +20,8 @@ const checkAuth = async (req, res) => {
     if (!usuario) {
       throw { msg: 'Usuario no encontrado' };
     }
-
     const autenticacion = await usuario.authenticate(password);
-
+    console.log(autenticacion)
     if (!autenticacion) {
       throw { msg: 'Contraseña incorrecta' };
     }
@@ -43,7 +43,7 @@ router.get('/obtener', verifyAdmin, controller.obtener);
 router.put('/actualizar/:id', verifyAdmin, (req, res) =>
   controller.actualizar(req, res, 'id', 'Usuario actualizado correctamente')
 );
-router.delete('/eliminar/:id', (req, res) =>
+router.delete('/eliminar/:id', verifyAdmin, (req, res) =>
   controller.eliminar(req, res, 'id')
 );
 
